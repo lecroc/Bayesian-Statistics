@@ -69,10 +69,99 @@ prob<-sum(posterior[1:4])*100
 prob
 
 
+# same example with larger sample (40 subjects, 8 pregnancies)
+
+p<- seq(from=.1, to=.9, by=.1)
+prior<-c(rep(.06,4), .52, rep(.06, 4))
+likelyhood<-dbinom(8, size=40, prob=p)
+
+likelyhood
 
 
+# CAlculating posterior
+
+numerator<-prior*likelyhood
+denominator<-sum(numerator)
+posterior<-numerator/denominator
+sum(posterior)
+posterior
+
+# Calculate probability that RU486 is more effective than control
+# Sum of posterieors where p<.5
+
+options(scipen = 999)
+
+posterior
+
+prob<-sum(posterior[1:4])*100
+
+# Probability that RU486 is more effective:
+
+prob
 
 
+# Even bigger sample size
+
+p<- seq(from=.1, to=.9, by=.1)
+prior<-c(rep(.06,4), .52, rep(.06, 4))
+likelyhood<-dbinom(40, size=200, prob=p)
+
+likelyhood
+
+
+# CAlculating posterior
+
+numerator<-prior*likelyhood
+denominator<-sum(numerator)
+posterior<-numerator/denominator
+sum(posterior)
+posterior
+
+# Calculate probability that RU486 is more effective than control
+# Sum of posterieors where p<.5
+
+options(scipen = 999)
+
+posterior
+
+prob<-sum(posterior[1:4])*100
+
+# Probability that RU486 is more effective:
+
+prob
+
+#########################
+
+# Practice quiz question 5
+
+
+p<- c(.2, .4, .5, .6, .8)
+prior<-c(rep(.125,2), .5, rep(.125, 2))
+likelyhood<-dbinom(3, size=3, prob=p)
+
+likelyhood
+
+
+# CAlculating posterior
+
+numerator<-prior*likelyhood
+denominator<-sum(numerator)
+posterior<-numerator/denominator
+sum(posterior)
+posterior
+
+# Calculate probability that RU486 is more effective than control
+# Sum of posterieors where p<.5
+
+options(scipen = 999)
+
+posterior
+
+prob<-sum(posterior[1:4])*100
+
+# Probability that RU486 is more effective:
+
+prob
 
 
 
