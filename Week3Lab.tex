@@ -1,0 +1,1135 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{}
+    \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+
+Complete all \textbf{Exercises}, and submit answers to
+\textbf{Questions} in the \textbf{Quiz: Week 3 Lab} on Coursera.
+
+\subsection{Getting Started}\label{getting-started}
+
+In this lab we will review exploratory data analysis using the
+\texttt{ggplot2} package for data visualization, which is included in
+the \texttt{tidyverse}. The main focus of this lab is to be able to
+obtain and interpret credible intervals and hypothesis tests using
+Bayesian methods for numerical variables. The data and functions for
+inference can be found in the companion package for this course,
+\texttt{statsr}.
+
+Let's load the necessary packages for this week's lab:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(PairedData)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(statsr)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{The data}\label{the-data}
+
+In 2004, the state of North Carolina released a large data set
+containing information on births recorded in this state. This data set
+is useful to researchers studying the relation between habits and
+practices of expectant mothers and the birth of their children. We will
+work with a random sample of observations from this data set.
+
+Let's load the \texttt{nc} data set into our workspace from the
+\texttt{statsr} package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(nc)}
+\end{Highlighting}
+\end{Shaded}
+
+We have observations on 13 different variables, some categorical and
+some numerical. The meaning of each variable is as follows.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.22\columnwidth}\raggedright\strut
+variable\strut
+\end{minipage} & \begin{minipage}[b]{0.60\columnwidth}\raggedright\strut
+description\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{fage}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+father's age in years.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{mage}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+mother's age in years.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{mature}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+maturity status of mother.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{weeks}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+length of pregnancy in weeks.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{premie}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+whether the birth was classified as premature (premie) or
+full-term.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{visits}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+number of hospital visits during pregnancy.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{marital}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+whether mother is \texttt{married} or \texttt{not\ married} at
+birth.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{gained}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+weight gained by mother during pregnancy in pounds.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{weight}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+weight of the baby at birth in pounds.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{lowbirthweight}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+whether baby was classified as low birthweight (\texttt{low}) or not
+(\texttt{not\ low}).\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{gender}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+gender of the baby, \texttt{female} or \texttt{male}.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{habit}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+status of the mother as a \texttt{nonsmoker} or a \texttt{smoker}.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.22\columnwidth}\raggedright\strut
+\texttt{whitemom}\strut
+\end{minipage} & \begin{minipage}[t]{0.60\columnwidth}\raggedright\strut
+whether mom is \texttt{white} or \texttt{not\ white}.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Note: These data should be familiar for those who took the
+\emph{Inferential Statistics} course as part of the \emph{Statistics
+with R} specialization, where the \texttt{nc} data were used in the
+\textbf{Inference for Numerical Data} lab.
+
+\subsubsection{EDA}\label{eda}
+
+As a first step in the analysis, let's take a look at the variables in
+the dataset and how \texttt{R} has encoded them. The most straight
+forward way of doing this is using the \texttt{glimpse} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glimpse}\NormalTok{(nc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Observations: 1,000
+## Variables: 13
+## $ fage           <int> NA, NA, 19, 21, NA, NA, 18, 17, NA, 20, 30, NA,...
+## $ mage           <int> 13, 14, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16,...
+## $ mature         <fct> younger mom, younger mom, younger mom, younger ...
+## $ weeks          <int> 39, 42, 37, 41, 39, 38, 37, 35, 38, 37, 45, 42,...
+## $ premie         <fct> full term, full term, full term, full term, ful...
+## $ visits         <int> 10, 15, 11, 6, 9, 19, 12, 5, 9, 13, 9, 8, 4, 12...
+## $ marital        <fct> married, married, married, married, married, ma...
+## $ gained         <int> 38, 20, 38, 34, 27, 22, 76, 15, NA, 52, 28, 34,...
+## $ weight         <dbl> 7.63, 7.88, 6.63, 8.00, 6.38, 5.38, 8.44, 4.69,...
+## $ lowbirthweight <fct> not low, not low, not low, not low, not low, lo...
+## $ gender         <fct> male, male, female, male, female, male, male, m...
+## $ habit          <fct> nonsmoker, nonsmoker, nonsmoker, nonsmoker, non...
+## $ whitemom       <fct> not white, not white, white, white, not white, ...
+\end{verbatim}
+
+Another useful function is \texttt{summary} which provides the range,
+quartiles, and means for numeric variables and counts for categorical
+variables. Additionally, if there are any missing observations (denoted
+\texttt{NA}), summary will provide the number of missing cases for each
+variable. Note that the output of the summary function can be too long
+and difficult to parse visually and interpret if the dataset has a large
+number of variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(nc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       fage            mage            mature        weeks      
+##  Min.   :14.00   Min.   :13   mature mom :133   Min.   :20.00  
+##  1st Qu.:25.00   1st Qu.:22   younger mom:867   1st Qu.:37.00  
+##  Median :30.00   Median :27                     Median :39.00  
+##  Mean   :30.26   Mean   :27                     Mean   :38.33  
+##  3rd Qu.:35.00   3rd Qu.:32                     3rd Qu.:40.00  
+##  Max.   :55.00   Max.   :50                     Max.   :45.00  
+##  NA's   :171                                    NA's   :2      
+##        premie        visits            marital        gained     
+##  full term:846   Min.   : 0.0   married    :386   Min.   : 0.00  
+##  premie   :152   1st Qu.:10.0   not married:613   1st Qu.:20.00  
+##  NA's     :  2   Median :12.0   NA's       :  1   Median :30.00  
+##                  Mean   :12.1                     Mean   :30.33  
+##                  3rd Qu.:15.0                     3rd Qu.:38.00  
+##                  Max.   :30.0                     Max.   :85.00  
+##                  NA's   :9                        NA's   :27     
+##      weight       lowbirthweight    gender          habit    
+##  Min.   : 1.000   low    :111    female:503   nonsmoker:873  
+##  1st Qu.: 6.380   not low:889    male  :497   smoker   :126  
+##  Median : 7.310                               NA's     :  1  
+##  Mean   : 7.101                                              
+##  3rd Qu.: 8.060                                              
+##  Max.   :11.750                                              
+##                                                              
+##       whitemom  
+##  not white:284  
+##  white    :714  
+##  NA's     :  2  
+##                 
+##                 
+##                 
+## 
+\end{verbatim}
+
+As you review the variable summaries, consider which variables are
+categorical and which are numerical. For numerical variables, are there
+outliers? If you aren't sure or want to take a closer look at the data,
+you can make a graph.
+
+For example, we can examine the distribution of the amount of weight
+that a mother \texttt{gained} with a histogram.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ nc, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ gained)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 27 rows containing non-finite values (stat_bin).
+\end{verbatim}
+
+\includegraphics{Week3Lab_files/figure-latex/hist-weight-1.pdf}
+
+This function says to plot the \texttt{gained} variable from the
+\texttt{nc} data frame on the x-axis. It also defines a \texttt{geom}
+(short for geometric object), which describes the type of plot you will
+produce. We used a binwidth of 5, however you can change this value and
+see how it affects the shape of the histogram. Also note that the
+function results in a warning saying that 27 rows have been removed.
+This is because 27 observations in the data have \texttt{NA} values for
+weight gained. You can confirm this by peeking back at the summary
+output above. If you need a refresher on using \texttt{ggplot2}, you may
+want to take some time to review the material in the earlier courses in
+this specialization.
+
+How many of the 13 variables are categorical?
+
+\begin{itemize}
+\tightlist
+\item
+  5
+\item
+  6
+\item
+  7
+\item
+  8
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for Question 1 here.}
+\end{Highlighting}
+\end{Shaded}
+
+We will start with analyzing the weight of the babies at birth, which is
+contained in the variable \texttt{weight}.
+
+Use a visualization such as a histogram and summary statistics tools in
+R to analyze the distribution of \texttt{weight}. Which of the following
+best describes the distribution of \texttt{weight}?
+
+\begin{itemize}
+\tightlist
+\item
+  Left skewed
+\item
+  Right skewed
+\item
+  Uniformly distributed
+\item
+  Normally distributed
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for Question 2 here.}
+\end{Highlighting}
+\end{Shaded}
+
+The variable \texttt{premie} in the dataframe classifies births on
+whether they were full-term or premie. We can use some of the functions
+of \texttt{dplyr} to create a new dataframe to limit the analysis to
+full term births.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nc_fullterm =}\StringTok{ }\KeywordTok{filter}\NormalTok{(nc, premie }\OperatorTok{==}\StringTok{ 'full term'}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(nc_fullterm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       fage            mage            mature        weeks      
+##  Min.   :14.00   Min.   :13   mature mom :109   Min.   :37.00  
+##  1st Qu.:25.00   1st Qu.:22   younger mom:737   1st Qu.:38.00  
+##  Median :30.00   Median :27                     Median :39.00  
+##  Mean   :30.24   Mean   :27                     Mean   :39.25  
+##  3rd Qu.:35.00   3rd Qu.:32                     3rd Qu.:40.00  
+##  Max.   :50.00   Max.   :50                     Max.   :45.00  
+##  NA's   :132                                                   
+##        premie        visits             marital        gained     
+##  full term:846   Min.   : 0.00   married    :312   Min.   : 0.00  
+##  premie   :  0   1st Qu.:10.00   not married:534   1st Qu.:22.00  
+##                  Median :12.00                     Median :30.00  
+##                  Mean   :12.35                     Mean   :31.13  
+##                  3rd Qu.:15.00                     3rd Qu.:40.00  
+##                  Max.   :30.00                     Max.   :85.00  
+##                  NA's   :6                         NA's   :19     
+##      weight       lowbirthweight    gender          habit    
+##  Min.   : 3.750   low    : 30    female:431   nonsmoker:739  
+##  1st Qu.: 6.750   not low:816    male  :415   smoker   :107  
+##  Median : 7.440                                              
+##  Mean   : 7.459                                              
+##  3rd Qu.: 8.190                                              
+##  Max.   :11.750                                              
+##                                                              
+##       whitemom  
+##  not white:228  
+##  white    :616  
+##  NA's     :  2  
+##                 
+##                 
+##                 
+## 
+\end{verbatim}
+
+The \texttt{filter} function selects variables all variables from the
+dataframe \texttt{nc} where the condition \texttt{premie} equals ``full
+term'' is met.
+
+Repeat the visualization and summary with the weights from full term
+term births. Does \texttt{weight} appear to be approximately normally
+distributed?
+
+\subsection{Inference}\label{inference}
+
+Next we will introduce a function \texttt{bayes\_inference} that we will
+use for constructing credible intervals and conducting hypothesis tests.
+The following illustrates how we would use the function
+\texttt{bayes\_inference} to construct a 95\% credible interval of
+\texttt{weight}; the Bayesian analogue to a 95\% confidence interval.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bayes_inference}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ weight, }\DataTypeTok{data =}\NormalTok{ nc_fullterm, }
+                \DataTypeTok{statistic =} \StringTok{"mean"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"ci"}\NormalTok{,  }
+                \DataTypeTok{prior_family =} \StringTok{"JZS"}\NormalTok{, }\DataTypeTok{mu_0 =} \FloatTok{7.7}\NormalTok{, }\DataTypeTok{rscale =} \DecValTok{1}\NormalTok{,}
+                \DataTypeTok{method =} \StringTok{"simulation"}\NormalTok{,}
+                \DataTypeTok{cred_level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Single numerical variable
+## n = 846, y-bar = 7.4594, s = 1.075
+## (Assuming Zellner-Siow Cauchy prior:  mu | sigma^2 ~ C(7.7, 1*sigma)
+## (Assuming improper Jeffreys prior: p(sigma^2) = 1/sigma^2
+## 
+## Posterior Summaries
+##            2.5%       25%       50%       75%      97.5%
+## mu    7.3856447  7.433359  7.458152  7.484357   7.531028
+## sigma 1.0274558  1.058485  1.075886  1.093907   1.129180
+## n_0   0.9728835 10.051580 24.343128 47.987231 126.158908
+## 
+## 95% CI for mu: (7.3856, 7.531)
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{Week3Lab_files/figure-latex/mean-inference-1} \end{center}
+
+Let's look at the meanings of the arguments of this custom function. The
+first argument \texttt{y} specifies the response variable that we are
+interested in: \texttt{weight}. The second argument, \texttt{data},
+specifies the dataset \texttt{nc\_fullterm} that contains the variable
+\texttt{weight}. The third argument \texttt{statistic} is the sample
+statistic we're using, or similarly, the population parameter we're
+estimating. The argument \texttt{type} specifies the type of inference
+that we want: credible intervals (\texttt{type\ =\ "ci"}), or hypothesis
+tests (\texttt{type\ =\ "ht"}). The argument \texttt{prior} indicates
+which prior distribution for any unknown parameters we will use for
+inference or testing, with options \texttt{JZS} (the
+Jeffreys-Zellner-Siow prior which is the Jeffreys prior for the unknown
+variance and a Cauchy prior for the mean), \texttt{JUI} (the
+Jeffreys-Unit Information prior which is the Jeffreys prior for the
+variance and the Unit Information Gaussian prior for the mean),
+\texttt{NG} (the conjugate Normal-Gamma prior for the mean and inverse
+of the variance) or \texttt{ref} (the independent Jeffreys reference
+prior for the variance and the uniform prior for the mean). As we would
+like to use the same prior for constructing credible intervals and
+hypothesis testing later with results that are robust if we mis-specify
+the prior, we will use the \texttt{JZS} option. For all of the
+\texttt{prior\_family} options, we need to specify prior
+hyperparameters. For \texttt{JZS}, the prior on standardized effect
+\(\mu/\sigma\) is a Cauchy centered at \texttt{mu\_0} and with a scale
+of \texttt{rscale}. By default these are zero and one respectively. The
+average birthweight for full term births in the US in 1994-1996 was 7.7
+pounds, which we will use as the center of our prior distribution using
+the argument \texttt{mu\_0\ =\ 7.7}. We will use the default argument
+\texttt{rscale\ =\ 1}. The method of inference can be either
+\texttt{method\ =\ "theoretical"} (theoretical based) or
+\texttt{"simulation"} based; in the case of the \texttt{JZS} prior for
+credible intervals, \texttt{"simulation"} is the only option as there
+are no closed form results. We also specify that we are looking for the
+95\% credible interval by setting \texttt{cred\_level\ =\ 0.95}, which
+is the default. For more information on the \texttt{bayes\_inference}
+function see the help file with \texttt{?bayes\_inference}.
+
+Which of the following corresponds to the \textbf{95\%} credible
+interval for the average birth weight of all full-term babies born in
+North Carolina?
+
+\begin{itemize}
+\tightlist
+\item
+  There is a 95\% chance that babies weigh 7.4 to 7.5 pounds.
+\item
+  There is a 95\% chance that the average weights of babies in this
+  sample is between 7.4 an 7.5 pounds.
+\item
+  There is a 95\% chance that babies on average weigh 7.4 to 7.5 pounds.
+\end{itemize}
+
+We can also conduct a Bayesian hypothesis test by calculating Bayes
+factors or posterior probabilities. Let us test to see if the average
+birth weight in North Carolina for full term births is significantly
+different from the US average of 7.7 pounds from 1994-96. The two
+competing hypotheses are:
+
+\[ H_1: \mu = 7.7 \] \[ H_2: \mu \ne 7.7 \]
+
+To conduct this hypothesis test, we will need to change the
+\texttt{type} argument to hypothesis test, \texttt{type\ =\ "ht"} in the
+\texttt{bayes\_inference} function. In addition, we will need to add the
+type of alternative hypothesis as an additional argument
+\texttt{alternative\ =\ "twosided"}. For faster calculation, change the
+method to \texttt{theoretical} and add \texttt{show\_plot=FALSE}.
+
+Based of Jeffrey's scale for interpretation of a Bayes factors how
+should we describe the evidence against \(H_1\) from your results for
+the hypothesis test?
+
+\begin{itemize}
+\tightlist
+\item
+  Not worth a bare mention
+\item
+  Positive
+\item
+  Strong
+\item
+  Very Strong
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for the Exercise here.}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Prediction using MCMC}\label{prediction-using-mcmc}
+
+A key advantage of Bayesian statistics is predictions and the
+probabilistic interpretation of predictions. Much of Bayesian prediction
+is done using simulation techniques, some of which was discussed near
+the end of this module. We will go over a simple simulation example to
+obtain the predictive distribution of the variable \texttt{weight} using
+the output of \texttt{bayes\_inference} which we will save to the object
+\texttt{weight\_post}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{weight_post =}\StringTok{ }\KeywordTok{bayes_inference}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ weight, }\DataTypeTok{data =}\NormalTok{ nc_fullterm, }
+                              \DataTypeTok{statistic =} \StringTok{"mean"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"ci"}\NormalTok{,  }
+                              \DataTypeTok{prior_family =} \StringTok{"JZS"}\NormalTok{, }\DataTypeTok{mu_0 =} \FloatTok{7.7}\NormalTok{, }\DataTypeTok{rscale =} \DecValTok{1}\NormalTok{,}
+                              \DataTypeTok{method =} \StringTok{"simulation"}\NormalTok{,}
+                              \DataTypeTok{cred_level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Single numerical variable
+## n = 846, y-bar = 7.4594, s = 1.075
+## (Assuming Zellner-Siow Cauchy prior:  mu | sigma^2 ~ C(7.7, 1*sigma)
+## (Assuming improper Jeffreys prior: p(sigma^2) = 1/sigma^2
+## 
+## Posterior Summaries
+##            2.5%      25%       50%       75%      97.5%
+## mu    7.3884343 7.434758  7.459568  7.483832   7.531574
+## sigma 1.0261542 1.057962  1.075498  1.093574   1.128353
+## n_0   0.8174496 9.686676 23.526970 46.876835 124.902867
+## 
+## 95% CI for mu: (7.3884, 7.5316)
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{Week3Lab_files/figure-latex/weight-inference-1} \end{center}
+
+The \texttt{names} function can list the output or objects that are
+stored in the object created by \texttt{bayes\_inference}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(weight_post)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "mu"         "post_den"   "cred_level" "post_mean"  "post_sd"   
+## [6] "ci"         "samples"    "summary"    "plot"
+\end{verbatim}
+
+In particular, the \texttt{samples} object is a \texttt{matrix} or table
+which contain the draws from the MCMC simulation, and includes columns
+for \texttt{mu} and \texttt{sig2}, which are posterior samples of the
+mean and variance respectively. Let's see how we can use these to make
+predictions.
+
+\subsubsection{\texorpdfstring{Posterior predictive distribution of new
+observation
+\(y_{n+1}\)}{Posterior predictive distribution of new observation y\_\{n+1\}}}\label{posterior-predictive-distribution-of-new-observation-y_n1}
+
+The distribution of any new observation conditional on the mean and
+variance is \[N(\mu, \sigma^2)\] and if we knew \(\mu\) and \(\sigma^2\)
+we could draw a sample from the distribution of the new observation from
+the normal distribution. While we do not know \(\mu\) and \(\sigma^2\)
+we the draws of \(\mu\) and \(\sigma^2\) from their posterior
+distributions. If we substitute these values into the normal
+distribution for \(Y_{n+1}\), we can obtain samples from the predictive
+distribution for the birth weight for any new observation \(y_{1001}\).
+
+We'll first convert our \texttt{samples} into a dataframe and then use
+\texttt{mutate} the create draws from the predictive distribution using
+\texttt{rnorm}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{samples =}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(weight_post}\OperatorTok{$}\NormalTok{samples)}
+\NormalTok{nsim =}\StringTok{ }\KeywordTok{nrow}\NormalTok{(samples)}
+\NormalTok{samples =}\StringTok{ }\KeywordTok{mutate}\NormalTok{(samples, }\DataTypeTok{y_pred =} \KeywordTok{rnorm}\NormalTok{(nsim, mu, }\KeywordTok{sqrt}\NormalTok{(sig2)))}
+\end{Highlighting}
+\end{Shaded}
+
+We can view an estimate of the predictive distribution, by looking at a
+smoothed version of the histogram of the simulated data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ samples, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ y_pred)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ ..density..), }\DataTypeTok{bins =} \DecValTok{100}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_density}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\KeywordTok{expression}\NormalTok{(y[new]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{Week3Lab_files/figure-latex/preddens-1} \end{center}
+
+A 95\% central credible interval for a new observation is the interval
+(L, U) where \(P(Y_{new} < L \mid Y) = 0.05/2\) and
+\(P(Y_{new} > U \mid Y) = 0.05/2)\). In this case, since the posterior
+distribution of \(\mu\) and \(Y_{new}\) are both symmetric, we can set L
+to be the 0.025 quantile and U to be the 0.975 quantile. Using the
+\texttt{quantile} function \texttt{R} we can find the 0.025 and 0.975,
+as well as median (0.50) quantiles of the predictive distribution:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(samples, mu, y_pred) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{map}\NormalTok{(quantile, }\DataTypeTok{probs=}\KeywordTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.50}\NormalTok{, }\FloatTok{0.975}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $mu
+##     2.5%      50%    97.5% 
+## 7.388434 7.459568 7.531574 
+## 
+## $y_pred
+##     2.5%      50%    97.5% 
+## 5.337227 7.460254 9.568247
+\end{verbatim}
+
+In the above code we are using \texttt{dplyr:select} to select just the
+columns \texttt{mu} and \texttt{y\_pred} from \texttt{samples}. The
+usage of \texttt{dplyr:} preceeding \texttt{select}, ensures that we are
+using the \texttt{select} function from the \texttt{dplyr} package to
+avoid possible name conflicts, as several packages have a
+\texttt{select} function. We are also taking advantage of the pipe
+operator to send the selected columns to the \texttt{map} function to
+apply the \texttt{quantile} function to each of the selected columns for
+the probabilities in the argument \texttt{probs} to \texttt{quantile}.
+
+For predicting the birth weight of a new full term baby in NC,
+
+\begin{itemize}
+\tightlist
+\item
+  there is a 95\% chance that their birth weight will be 7.4 to 7.5
+  pounds.
+\item
+  there is a 95\% chance that their birth weight will be on average 7.4
+  to 7.5 pounds.
+\item
+  there is a 95\% chance that their birth weight will be 5.4 to 9.5
+  pounds.
+\item
+  there is 50\% chance that their birth weight will be 7.4 pounds.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for Question 5 here.}
+\end{Highlighting}
+\end{Shaded}
+
+Repeat the above analysis but find the predictive distribution for
+babies that were premature.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for Exersice 2 here.}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Bayesian inference for two independent
+means}\label{bayesian-inference-for-two-independent-means}
+
+Next, let us consider whether there is a difference of baby weights for
+babies born to smokers and non-smokers. Here we will use the variable
+\texttt{habit} to distinguish between babies born to mothers who smoked
+and babies born to mothers who were non-smokers. Plotting the data is a
+useful first step because it helps us quickly visualize trends, identify
+strong associations, and develop research questions.
+
+To create side by side boxplots by levels of a categorical variable
+\texttt{x}, we can use the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(nc, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ habit, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Week3Lab_files/figure-latex/weight-habit-box-1.pdf}
+
+to create side-by-side boxplots of \texttt{weight} for smokers and
+non-smokers.
+
+Construct a side-by-side boxplot of \texttt{habit} and \texttt{weight}
+for the data using full term births and compare the two distributions.
+Which of the following is \emph{false} about the relationship between
+\texttt{habit} and \texttt{weight}?
+
+\begin{itemize}
+\tightlist
+\item
+  Median birth weight of babies born to non-smokers is slightly higher
+  than that of babies born to smokers.
+\item
+  Range of birth weights of female babies are roughly the same as that
+  of male babies.
+\item
+  Both distributions are approximately symmetric.
+\item
+  The IQRs of the distributions are roughly equal.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for the question here.}
+\end{Highlighting}
+\end{Shaded}
+
+The box plots show how the medians of the two distributions compare, but
+we can also compare the means of the distributions using the following
+to first group the data by the \texttt{habit} variable, and then
+calculate the mean \texttt{weight} in these groups using the
+\texttt{mean} function, where the \texttt{\%\textgreater{}\%} pipe
+operator takes the output of one function and then \emph{pipes} it into
+the next function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nc_fullterm }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(habit) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_weight =} \KeywordTok{mean}\NormalTok{(weight))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   habit     mean_weight
+##   <fct>           <dbl>
+## 1 nonsmoker        7.50
+## 2 smoker           7.17
+\end{verbatim}
+
+There is an observed difference, but is this difference statistically
+significant? In order to answer this question we will conduct a Bayesian
+hypothesis test.
+
+As before, we can use the \texttt{bayes\_inference} function to test the
+hypothesis the mean weight of babies born to non-smokers is different
+than the mean weight of babies born to smokers. The call is almost
+identical to the single mean case, except now we will provide
+\texttt{habit} as an explanatory variable (argument
+\texttt{x\ =\ habit}). Here, we use the theoretical method instead of
+simulation (argument \texttt{method\ =\ "theoretical"}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bayes_inference}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ weight, }\DataTypeTok{x =}\NormalTok{ habit, }\DataTypeTok{data =}\NormalTok{ nc_fullterm, }
+                \DataTypeTok{statistic =} \StringTok{"mean"}\NormalTok{, }
+                \DataTypeTok{type =} \StringTok{"ht"}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"twosided"}\NormalTok{, }\DataTypeTok{null =} \DecValTok{0}\NormalTok{, }
+                \DataTypeTok{prior =} \StringTok{"JZS"}\NormalTok{, }\DataTypeTok{rscale =} \DecValTok{1}\NormalTok{, }
+                \DataTypeTok{method =} \StringTok{"theoretical"}\NormalTok{, }\DataTypeTok{show_plot =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Response variable: numerical, Explanatory variable: categorical (2 levels)
+## n_nonsmoker = 739, y_bar_nonsmoker = 7.5011, s_nonsmoker = 1.0833
+## n_smoker = 107, y_bar_smoker = 7.1713, s_smoker = 0.9724
+## (Assuming Zellner-Siow Cauchy prior on the difference of means. )
+## (Assuming independent Jeffreys prior on the overall mean and variance. )
+## Hypotheses:
+## H1: mu_nonsmoker  = mu_smoker
+## H2: mu_nonsmoker != mu_smoker
+## 
+## Priors: P(H1) = 0.5  P(H2) = 0.5 
+## 
+## Results:
+## BF[H2:H1] = 6.237
+## P(H1|data) = 0.1382 
+## P(H2|data) = 0.8618
+\end{verbatim}
+
+Based on the Bayes factor calculated above, how strong is evidence
+against \(H_1\)?
+
+\begin{itemize}
+\tightlist
+\item
+  Not worth a bare mention
+\item
+  Positive
+\item
+  Strong
+\item
+  Very Strong
+\end{itemize}
+
+How would the Bayes factor above change if we were to increase the prior
+probability of \(H_2\) to 0.75? (Hint: you may change the prior of
+\(H_1\) and \(H_2\) by specifying
+\texttt{hypothesis\_prior\ =\ c(a,\ b)} where \(P(H_1) = a\),
+\(P(H_2) = b\), and \(a+b = 1\).)
+
+\begin{itemize}
+\tightlist
+\item
+  Get bigger
+\item
+  Get smaller
+\item
+  Stay the same
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for the question here.}
+\end{Highlighting}
+\end{Shaded}
+
+If differences between the groups are expected to be small, using a
+value of \texttt{rscale\ =\ sqrt(2)/2} in the \texttt{JZS} prior is
+recommended.
+
+How would the Bayes factor for H2 to H1 change if we were to change the
+scale in the Cauchy prior \texttt{rscale\ =\ sqrt(2)/2}?
+
+\begin{itemize}
+\tightlist
+\item
+  Get bigger
+\item
+  Get smaller
+\item
+  Stay the same
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for  Question 9 here.}
+\end{Highlighting}
+\end{Shaded}
+
+To quantify the magnitude of the differences in mean birth weight, we
+can use a credible interval. Change the \texttt{type} argument to
+\texttt{"ci"} to construct and record a credible interval for the
+difference between the weights of babies born to nonsmoking and smoking
+mothers, and interpret this interval in context of the data. Note that
+by default you'll get a 95\% credible interval. If you want to change
+the confidence level, change the value for \texttt{cred\_level} which
+takes on a value between 0 and 1. Also note that when doing a credible
+interval arguments like \texttt{null} and \texttt{alternative} are not
+useful, so make sure to remove them, but include the prior mean
+\texttt{mu\_0}.
+
+Based on the 95\% credible interval for the differences in full term
+birth weights for nonsmokers and smoker:
+
+\begin{itemize}
+\tightlist
+\item
+  there is a 95\% chance that babies born to nonsmoker mothers are on
+  average 0.11 to 0.54 pounds lighter at birth than babies born to
+  smoker mothers.
+\item
+  there is a 95\% chance that the difference in average weights of
+  babies whose moms are smokers and nonsmokers is between 0.11 to 0.54
+  pounds.
+\item
+  there is a 95\% chance that the difference in average weights of
+  babies in this sample whose moms are nonsmokers and smokers is between
+  0.11 to 0.54 pounds.
+\item
+  there is a 95\% chance that babies born to nonsmoker mothers are on
+  average 0.11 to 0.54 pounds heavier at birth than babies born to
+  smoker mothers.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for Question 10 here.}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Bayesian inference on Two Paired
+Means}\label{bayesian-inference-on-two-paired-means}
+
+The second data set comes from a 2008 study \emph{A simple tool to
+ameliorate detainees' mood and well-being in Prison: Physical
+activities}. The study was performed in a penitentiary of the
+Rhone-Alpes region (France), that includes two establishments, one for
+remand prisoners and short sentences (Jail) and the second for sentenced
+persons (Detention Centre, DC). A total number of 26 male subjects,
+imprisoned between 3 to 48 months, participated to the study. The
+participants were divided into two groups: 15 ``Sportsmen'' who chose
+spontaneously to follow the physical program; and 11 ``References'', who
+did not and wished to remain sedentary. This data provide the perceived
+stress scale (PSS) of the participants in prison at the entry
+(\texttt{PSSbefore}) and at the exit (\texttt{PSSafter}).
+
+We can load the \texttt{PrisonStress} data set into our workspace using
+the \texttt{data} function once the \texttt{PairedData} package is
+loaded.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"PrisonStress"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This data set consists of 26 observations on 4 variables. They are
+summarized as follows:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.17\columnwidth}\raggedright\strut
+variable\strut
+\end{minipage} & \begin{minipage}[b]{0.71\columnwidth}\raggedright\strut
+description\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\texttt{Subject}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+anonymous subjects\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\texttt{Group}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+whether the subject chose to follow the physical programme
+\texttt{Sport} or not \texttt{Control}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\texttt{PSSbefore}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+perceived stress measurement at the entry\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.17\columnwidth}\raggedright\strut
+\texttt{PSSafter}\strut
+\end{minipage} & \begin{minipage}[t]{0.71\columnwidth}\raggedright\strut
+perceived stress measurement at the exit\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+We have two groups of observations: the \texttt{sport} group, the ones
+who chose to follow the physical training program; and the
+\texttt{control} group, the ones who chose not to follow. We are
+interested to know whether in average there is any difference in the
+perceived stress scale (PSS) before they started the training (at the
+entry) and after the training (at the exit).
+
+We first analyze the \texttt{control} group data. We subset the data
+according to the \texttt{Group} variable using the \texttt{dplyr}
+package, and save this into a smaller data set \texttt{PPS.control}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pss_control =}\StringTok{ }\NormalTok{PrisonStress }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(Group }\OperatorTok{==}\StringTok{ "Control"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{diff =}\NormalTok{ PSSbefore }\OperatorTok{-}\StringTok{ }\NormalTok{PSSafter)}
+\end{Highlighting}
+\end{Shaded}
+
+where the third line calculate the difference of the PSS of each subject
+before and after the training and saves it as a new variable
+\texttt{diff}.
+
+We can now conduct the following hypothesis test:
+\[ H_1: \mu_{\text{before}} = \mu_{\text{after}}\qquad \Longrightarrow \qquad H_1: \mu_{\text{diff}} = 0, \]
+
+\[ H_2: \mu_{\text{before}} \neq \mu_{\text{after}}\qquad \Longrightarrow \qquad H_1: \mu_{\text{diff}} \neq 0, \]
+
+We use \texttt{bayes\_inference} function to calculate the Bayes factor.
+The code is similar to the one we used for inference for one mean,
+except that we need to set \texttt{null\ =\ 0}, because we are comparing
+the mean of the difference to 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{bayes_inference}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ diff, }\DataTypeTok{data =}\NormalTok{ pss_control, }
+                \DataTypeTok{statistic =} \StringTok{"mean"}\NormalTok{,}
+                \DataTypeTok{type =} \StringTok{"ht"}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"twosided"}\NormalTok{, }\DataTypeTok{null =} \DecValTok{0}\NormalTok{, }
+                \DataTypeTok{prior =} \StringTok{"JZS"}\NormalTok{, }\DataTypeTok{rscale =} \DecValTok{1}\NormalTok{, }
+                \DataTypeTok{method =} \StringTok{"simulation"}\NormalTok{, }\DataTypeTok{show_plot =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Single numerical variable
+## n = 11, y-bar = -7.3636, s = 9.2333
+## (Using Zellner-Siow Cauchy prior:  mu ~ C(0, 1*sigma)
+## (Using Jeffreys prior: p(sigma^2) = 1/sigma^2
+## 
+## Hypotheses:
+## H1: mu = 0 versus H2: mu != 0
+## Priors:
+## P(H1) = 0.5 , P(H2) = 0.5
+## Results:
+## BF[H2:H1] = 2.7364
+## P(H1|data) = 0.2676  P(H2|data) = 0.7324
+\end{verbatim}
+
+While there appears to an increase in stress, based on Jeffrey's scales
+of evidence, the evidence against H1 is `\emph{worth a bare mention}'.
+
+Conduct the same hypothesis test for the mean of the difference in
+perceived stress scale for the \texttt{sport} group. Based of Jeffrey's
+scale for interpretation of a Bayes factors how should we describe the
+evidence against \(H_1\) from the results?
+
+\begin{itemize}
+\tightlist
+\item
+  Not worth a bare mention
+\item
+  Positive
+\item
+  Strong
+\item
+  Very strong
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for Question 11 here.}
+\end{Highlighting}
+\end{Shaded}
+
+It is possible that other factors during this period of time could
+affect stress. By combining data from both groups we can increase our
+sample size, which provides greater power to detect a difference due to
+the intervention. If we assume that the variation in the two groups is
+comparable, we can use the differences in the before and after
+measurements to compare whether the intervention had an effect on stress
+levels.
+
+Create a new data frame with a variable that is the difference in pre
+and post stress measurements and test the hypothesis that the mean
+difference in the control group is equal to the mean in the sport group
+versus the hypothesis that the means are not equal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Type your code for Exercise 2 here.}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
