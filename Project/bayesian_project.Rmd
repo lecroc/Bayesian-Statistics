@@ -3,20 +3,22 @@
 ### Load packages
 
 ```{r load-packages, message = FALSE}
-library(ggplot2)
 library(dplyr)
+library(ggplot2)
+library(GGally)
 library(statsr)
 library(BAS)
 ```
 
 ### Load data
 
-Make sure your data and R Markdown files are in the same directory. When loaded
-your data file will be called `movies`. Delete this note when before you submit 
-your work. 
+```{r}
+load("movies.Rdata")
 
-```{r load-data}
-#load("movies.Rdata")
+d1<-as.data.frame(movies)
+
+dim(d1)
+
 ```
 
 
@@ -25,14 +27,52 @@ your work.
 
 ## Part 1: Data
 
+The data set is a randomly selected group of 651 movies produced and released between 1970 and 2014.  Since this data is observational and not related to an expirement with random assignment, we can not look for causal relationships.  However, since the movies were randomly selected, we can look for associations and apply them to the population of interest, movies produced and released for consumption in the US market.
+
+There is little information on how the movies were randomly selected.  One might want to check to see if the composition of the the factor varialbes in the sample is representative of the total population of movies released within the date range.  There is also a potential for bias in the audience scores if we find that the populaton providing their opinions to IMDb and Rotten Tomatoes is not a good representation of the population viewing movies in the US market.
+
 
 * * *
 
 ## Part 2: Data manipulation
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
-button above. Make sure that your code is visible in the project you submit. 
-Delete this note when before you submit your work.
+First, I'll select the variables I'll need from the original data set, and use the mutate() function to create the new factors required for the model.
+
+```{r}
+d2<-d1 %>% 
+  select(title_type, genre, runtime, mpaa_rating, thtr_rel_year,
+         thtr_rel_month, imdb_rating, imdb_num_votes, critics_score,
+         best_pic_nom, best_pic_win, best_actor_win, best_actress_win,
+         best_dir_win, top200_box, audience_score) %>%
+  mutate(feature_film=ifelse(title_type=="Feature Film", "yes", "no")) %>%
+  mutate(drama=ifelse(genre=="Drama", "yes", "no")) %>%
+  mutate(mpaa_rating_R=ifelse(mpaa_rating=="R", "yes", "no")) %>%
+  mutate(oscar_season=ifelse(thtr_rel_month>9, "yes", "no")) %>%
+  mutate(summer_season=ifelse(thtr_rel_month>4 & thtr_rel_month<9, "yes", "no"))
+
+```
+
+Next, I'll select only the varialbes specified for EDA and Modelling, putting the dependant variable first.
+
+```{r}
+movdat<-d2 %>%
+  select(audience_score, feature_film, drama, runtime, mpaa_rating_R, thtr_rel_year,
+         oscar_season, summer_season, imdb_rating, imdb_num_votes,
+         critics_score, best_pic_nom, best_pic_win, best_actor_win,
+         best_actress_win, best_dir_win, top200_box)
+```
+
+Finally, I will check for any observations with missing data and remove any that I find.  Then I'll look at the dimensions of the final data set.
+
+```{r}
+cc<-complete.cases(movdat)
+movdat<-movdat[cc,]
+na<-sum(is.na(movdat))
+na
+dim(movdat)
+```
+
+We see that only one record is removed and that the final data set has 650 observations of 17 variables.
 
 * * *
 
