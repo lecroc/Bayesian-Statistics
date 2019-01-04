@@ -8,6 +8,7 @@ library(ggplot2)
 library(GGally)
 library(statsr)
 library(BAS)
+library(knitr)
 ```
 
 ### Load data
@@ -78,9 +79,87 @@ We see that only one record is removed and that the final data set has 650 obser
 
 ## Part 3: Exploratory data analysis
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
-button above. Make sure that your code is visible in the project you submit. 
-Delete this note when before you submit your work.
+Now that we have our data set, let's take a look relationships between the dependant variable (audience_score) and the numeric predictors.
+
+First, we'll look at some summary statistics:
+
+```{r}
+edan<-select_if(movdat, is.numeric)
+
+s1<-summary(edan$audience_score)
+s2<-summary(edan$runtime)
+s3<-summary(edan$thtr_rel_year)
+s4<-summary(edan$imdb_rating)
+s5<-summary(edan$imdb_num_votes)
+s6<-summary(edan$critics_score)
+
+stats<-names(edan)
+
+sumtable<-as.data.frame(rbind(s1,s2,s3,s4,s5,s6))
+sumtable<-as.data.frame(cbind(stats, sumtable))
+
+sumtable<-sumtable %>%
+  mutate(Skew=ifelse(Mean>Median, "Right", "Left"))
+
+kable(sumtable)
+```
+
+Blah blah blah.
+
+Next we'll look at a correlation matrix:
+
+```{r}
+p1<-ggpairs(edan)+
+  theme(legend.position = "none", axis.text.x = element_text(angle = 60,hjust = 1))
+
+p1
+
+```
+
+Blah blah blah
+
+Now we'll evaluate the new factor varialbes we created.  We'll use summary tables, box plots and density plots.  First up is the feature_film variable.
+
+```{r}
+eda<-movdat %>%
+  select(audience_score, feature_film, drama,
+         mpaa_rating_R, oscar_season, summer_season)
+
+eda1<-eda %>%
+  group_by(feature_film) %>%
+  summarise(n(), min(audience_score), quantile(audience_score, .25), 
+            median(audience_score), mean(audience_score),
+            quantile(audience_score, .75), max(audience_score))
+
+names(eda1)<-c("FeatureFilm", "Count", "Min", "1st Qu.", "Median", "Mean",
+               "3rd Qu.", "Max")
+eda1<-mutate(eda1, Skew=ifelse(Mean>Median, "Right", "Left"))
+
+kable(eda1)
+
+p2<-ggplot(eda, aes(x=factor(feature_film), y=audience_score, fill=factor(feature_film)))+
+  geom_boxplot()+
+  theme(legend.position = "none", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Box Plot")+
+  labs(x="Feature Film?", y="Audience Score")
+
+mu2<-eda %>%
+  group_by(feature_film) %>%
+  summarise(Mean=mean(audience_score))
+
+p2a<-ggplot(eda, aes(x=audience_score, color=feature_film, fill=feature_film))+
+  geom_density()+facet_grid(feature_film~.)+
+  geom_vline(data=mu2, aes(xintercept=Mean),
+             linetype="dashed")+
+  theme(legend.position = "right", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Distribution")+
+  labs(x="Audience Score", y="Density")
+
+p2
+p2a
+
+```
+
 
 * * *
 

@@ -11,6 +11,7 @@ library(ggplot2)
 library(GGally)
 library(statsr)
 library(BAS)
+library(knitr)
 
 # load data
 
