@@ -1,3 +1,13 @@
+---
+title: "Bayesian Model Selection and Prediction"
+output:
+  html_document:
+    fig_height: 4
+    highlight: pygments
+    theme: spacelab
+  word_document: default
+---
+
 ## Setup
 
 ### Load packages
@@ -5,6 +15,7 @@
 ```{r load-packages, message = FALSE}
 library(dplyr)
 library(ggplot2)
+library(gridExtra)
 library(GGally)
 library(statsr)
 library(BAS)
@@ -83,7 +94,8 @@ Now that we have our data set, let's take a look relationships between the depen
 
 First, we'll look at some summary statistics:
 
-```{r}
+```{r fig.align='center'} 
+
 edan<-select_if(movdat, is.numeric)
 
 s1<-summary(edan$audience_score)
@@ -102,13 +114,14 @@ sumtable<-sumtable %>%
   mutate(Skew=ifelse(Mean>Median, "Right", "Left"))
 
 kable(sumtable)
+
 ```
 
-Blah blah blah.
+We see from the summary statistics that the IMDb number of votes is exrremely right skewed.  Most of the films are between and hour and a half and two hours, with a few much longer.  The IMDb ratings and Rotten Tomatoes scores are left skewed with the ratings/scores bunching up a bit at the higher end of the range.
 
-Next we'll look at a correlation matrix:
+The following code will plot the variables from the table above in a correlation matrix.  This will allow us to see how these variables correlate with the audience_score variable, and help us look for colinearity between independent variables. It also provides a density curve which will help us look at the distributions.
 
-```{r}
+```{r fig.align='center',fig.width=11, fig.height=8}
 p1<-ggpairs(edan)+
   theme(legend.position = "none", axis.text.x = element_text(angle = 60,hjust = 1))
 
@@ -116,11 +129,14 @@ p1
 
 ```
 
-Blah blah blah
+From these plots we see that the IMDb rating and critics score are both highly correlated with our dependant variable, audience score.  They are also highly correlated with each other.  It will be interesting to see how the bayesian model seletion process handles the colinearity between the IMDb rating and the critics score.
 
 Now we'll evaluate the new factor varialbes we created.  We'll use summary tables, box plots and density plots.  First up is the feature_film variable.
 
-```{r}
+#### Feature Film
+
+```{r fig.align='center', fig.width=11, fig.height=6}
+
 eda<-movdat %>%
   select(audience_score, feature_film, drama,
          mpaa_rating_R, oscar_season, summer_season)
@@ -134,8 +150,6 @@ eda1<-eda %>%
 names(eda1)<-c("FeatureFilm", "Count", "Min", "1st Qu.", "Median", "Mean",
                "3rd Qu.", "Max")
 eda1<-mutate(eda1, Skew=ifelse(Mean>Median, "Right", "Left"))
-
-kable(eda1)
 
 p2<-ggplot(eda, aes(x=factor(feature_film), y=audience_score, fill=factor(feature_film)))+
   geom_boxplot()+
@@ -155,10 +169,194 @@ p2a<-ggplot(eda, aes(x=audience_score, color=feature_film, fill=feature_film))+
   ggtitle("Audience Score Distribution")+
   labs(x="Audience Score", y="Density")
 
-p2
-p2a
 
 ```
+
+```{r echo=F, fig.align='center', fig.width=11, fig.height=4}
+
+kable(eda1)
+
+grid.arrange(p2, p2a, ncol=2)
+
+```
+
+We see that there is a significant difference in the mean audience scores between feature films and non-feature films.  There are far fewer non-feature films, but they tend to have higher audience scores.
+
+We'll  take a similar look at the other factor variables we created.
+
+#### Drama
+
+```{r echo=F}
+
+eda2<-eda %>%
+  group_by(drama) %>%
+  summarise(n(), min(audience_score), quantile(audience_score, .25), 
+            median(audience_score), mean(audience_score),
+            quantile(audience_score, .75), max(audience_score))
+
+names(eda2)<-c("Drama", "Count", "Min", "1st Qu.", "Median", "Mean",
+               "3rd Qu.", "Max")
+eda2<-mutate(eda2, Skew=ifelse(Mean>Median, "Right", "Left"))
+
+
+p3<-ggplot(eda, aes(x=factor(drama), y=audience_score, fill=factor(drama)))+
+  geom_boxplot()+
+  theme(legend.position = "none", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Box Plot")+
+  labs(x="Drama?", y="Audience Score")
+
+mu3<-eda %>%
+  group_by(drama) %>%
+  summarise(Mean=mean(audience_score))
+
+p3a<-ggplot(eda, aes(x=audience_score, color=drama, fill=drama))+
+  geom_density()+facet_grid(drama~.)+
+  geom_vline(data=mu3, aes(xintercept=Mean),
+             linetype="dashed")+
+  theme(legend.position = "right", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Distribution")+
+  labs(x="Audience Score", y="Density")
+```
+
+```{r echo=F, fig.align='center', fig.width=11, fig.height=4}
+
+kable(eda2)
+
+grid.arrange(p3, p3a, ncol=2)
+
+```
+
+Not much here....
+
+#### R Rating
+
+```{r echo=F}
+
+eda3<-eda %>%
+  group_by(mpaa_rating_R) %>%
+  summarise(n(), min(audience_score), quantile(audience_score, .25), 
+            median(audience_score), mean(audience_score),
+            quantile(audience_score, .75), max(audience_score))
+
+names(eda3)<-c("R Rating", "Count", "Min", "1st Qu.", "Median", "Mean",
+               "3rd Qu.", "Max")
+eda3<-mutate(eda3, Skew=ifelse(Mean>Median, "Right", "Left"))
+
+p4<-ggplot(eda, aes(x=factor(mpaa_rating_R), y=audience_score, fill=factor(mpaa_rating_R)))+
+  geom_boxplot()+
+  theme(legend.position = "none", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Box Plot")+
+  labs(x="Rated R?", y="Audience Score")
+
+mu4<-eda %>%
+  group_by(mpaa_rating_R) %>%
+  summarise(Mean=mean(audience_score))
+
+p4a<-ggplot(eda, aes(x=audience_score, color=mpaa_rating_R, fill=mpaa_rating_R))+
+  geom_density()+facet_grid(mpaa_rating_R~.)+
+  geom_vline(data=mu4, aes(xintercept=Mean),
+             linetype="dashed")+
+  theme(legend.position = "right", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Distribution")+
+  labs(x="Audience Score", y="Density")
+```
+
+```{r echo=F, fig.align='center', fig.width=11, fig.height=4 }
+
+kable(eda3)
+
+grid.arrange(p4, p4a, ncol=2)
+
+```
+
+No difference in audience score with an R rating.
+
+#### Oscar Season
+
+```{r echo=F}
+
+eda4<-eda %>%
+  group_by(oscar_season) %>%
+  summarise(n(), min(audience_score), quantile(audience_score, .25), 
+            median(audience_score), mean(audience_score),
+            quantile(audience_score, .75), max(audience_score))
+
+names(eda4)<-c("Oscar Season", "Count", "Min", "1st Qu.", "Median", "Mean",
+               "3rd Qu.", "Max")
+eda4<-mutate(eda4, Skew=ifelse(Mean>Median, "Right", "Left"))
+
+p5<-ggplot(eda, aes(x=factor(oscar_season), y=audience_score, fill=factor(oscar_season)))+
+  geom_boxplot()+
+  theme(legend.position = "none", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Box Plot")+
+  labs(x="Released during Oscar Season?", y="Audience Score")
+
+mu5<-eda %>%
+  group_by(oscar_season) %>%
+  summarise(Mean=mean(audience_score))
+
+p5a<-ggplot(eda, aes(x=audience_score, color=oscar_season, fill=oscar_season))+
+  geom_density()+facet_grid(oscar_season~.)+
+  geom_vline(data=mu5, aes(xintercept=Mean),
+             linetype="dashed")+
+  theme(legend.position = "right", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Distribution")+
+  labs(x="Audience Score", y="Density")
+
+```
+
+```{r echo=F, fig.align='center', fig.width=11, fig.height=4}
+
+kable(eda4)
+
+grid.arrange(p5, p5a, ncol=2)
+
+```
+
+Movies released during Oscar season have a slightly higher average audience score.
+
+#### Summer Season
+
+```{r echo=F}
+
+eda5<-eda %>%
+  group_by(summer_season) %>%
+  summarise(n(), min(audience_score), quantile(audience_score, .25), 
+            median(audience_score), mean(audience_score),
+            quantile(audience_score, .75), max(audience_score))
+
+names(eda5)<-c("Summer Release", "Count", "Min", "1st Qu.", "Median", "Mean",
+               "3rd Qu.", "Max")
+eda5<-mutate(eda5, Skew=ifelse(Mean>Median, "Right", "Left"))
+
+p6<-ggplot(eda, aes(x=factor(summer_season), y=audience_score, fill=factor(summer_season)))+
+  geom_boxplot()+
+  theme(legend.position = "none", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Box Plot")+
+  labs(x="Summer Release?", y="Audience Score")
+
+mu6<-eda %>%
+  group_by(summer_season) %>%
+  summarise(Mean=mean(audience_score))
+
+p6a<-ggplot(eda, aes(x=audience_score, color=summer_season, fill=summer_season))+
+  geom_density()+facet_grid(summer_season~.)+
+  geom_vline(data=mu6, aes(xintercept=Mean),
+             linetype="dashed")+
+  theme(legend.position = "right", axis.text.x = element_text(angle = 60,hjust = 1))+
+  ggtitle("Audience Score Distribution")+
+  labs(x="Audience Score", y="Density")
+```
+
+```{r echo=F, fig.align='center', fig.width=11, fig.height=4}
+
+kable(eda5)
+
+grid.arrange(p6, p6a, ncol=2)
+
+```
+
+
 
 
 * * *
