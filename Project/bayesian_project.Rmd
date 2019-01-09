@@ -226,7 +226,7 @@ grid.arrange(p3, p3a, ncol=2)
 
 ```
 
-Not much here....
+Movies classified as Dramas have a slightly higher mean audience score, however, it doesn't appear significant from the plot.
 
 #### R Rating
 
@@ -269,7 +269,7 @@ grid.arrange(p4, p4a, ncol=2)
 
 ```
 
-No difference in audience score with an R rating.
+There is no difference in the mean audience score for movies that are rated R and those that are not.
 
 #### Oscar Season
 
@@ -356,7 +356,7 @@ grid.arrange(p6, p6a, ncol=2)
 
 ```
 
-
+Like the R rating, there is almost not difference in mean audience score between movies released during the summer and those that are not.
 
 
 * * *

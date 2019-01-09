@@ -301,3 +301,28 @@ p6a<-ggplot(eda, aes(x=audience_score, color=summer_season, fill=summer_season))
   labs(x="Audience Score", y="Density")
 
 p6a
+
+
+#####
+
+# Model!
+
+movbas<-bas.lm(audience_score~., prior = "BIC", modelprior = uniform(), data=movdat)
+
+round(summary(movbas), 3)
+
+image(movbas, rotate=F)
+
+options(scipen = 999)
+
+coef<-coef(movbas)
+
+confint(coef)
+
+plot(coef, subset=c(9,11))
+
+plot(movbas, which=1)
+plot(movbas, which=2)
+plot(movbas, which=3)
+plot(movbas, which=4)
+
