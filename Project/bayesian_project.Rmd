@@ -363,9 +363,69 @@ Like the R rating, there is almost not difference in mean audience score between
 
 ## Part 4: Modeling
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
-button above. Make sure that your code is visible in the project you submit. 
-Delete this note when before you submit your work.
+Now that we've evaluated the data set, we'll fit a bayesian linear model.  I'll use the bas.lm function from the BAS package with a BIC prior and uniform model prior.  We have 16 predictor variables, so we will be generating 65,536 (2^p) models.
+
+```{r}
+
+movbas<-bas.lm(audience_score~., prior = "BIC", modelprior = uniform(), data=movdat)
+
+```
+
+#### Model Diagnostics
+
+First, I'll use the summary() function to have a look at top five models and the posterior inclusion probabilities for each predictor.
+
+```{r}
+
+sumtable<-as.data.frame(round(summary(movbas), 3))
+
+names(sumtable)<-c("Probs", "Model1", "Model2", "Model3", "Model4", "Model5")
+
+sumtable$Stat<-rownames(sumtable)
+
+sumtable<-sumtable[,c(7,1,2,3,4,5,6)]
+
+sumtable<-arrange(sumtable, desc(Probs))
+
+kable(sumtable)
+
+```
+
+Blah blah......
+
+Model Image
+
+```{r fig.align='center', fig.width=11, fig.height=6}
+
+image(movbas, rotate=F)
+
+```
+
+Blah blah
+
+Table with confidence intervals
+
+```{r echo=F}
+
+options(scipen = 999)
+
+coef<-coef(movbas)
+coef1<-as.data.frame(cbind(coef$namesx,coef$postmean,coef$postsd,coef$probne0))
+conf<-confint(coef)
+conf2.5<-conf[1:nrow(conf)]
+conf97.5<-conf[(nrow(conf)+1):(nrow(conf)*2)]
+coef1[,5]<-conf2.5
+coef1[,6]<-conf97.5
+names(coef1)<-c("Stat", "post mean", "post SD", "postprobincl", "2.5", "97.5")
+coef1$`post mean`<-as.numeric(as.character(coef1$`post mean`))
+coef1$`post SD`<-as.numeric(as.character(coef1$`post SD`))
+coef1$postprobincl<-as.numeric(as.character(coef1$postprobincl))
+coef1<-arrange(coef1, desc(postprobincl))
+
+kable(coef1)
+
+
+```
 
 * * *
 

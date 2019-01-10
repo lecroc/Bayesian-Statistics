@@ -309,20 +309,47 @@ p6a
 
 movbas<-bas.lm(audience_score~., prior = "BIC", modelprior = uniform(), data=movdat)
 
-round(summary(movbas), 3)
+sumtable<-as.data.frame(round(summary(movbas), 3))
+
+names(sumtable)<-c("Probs", "Model1", "Model2", "Model3", "Model4", "Model5")
+
+sumtable$Stat<-rownames(sumtable)
+
+sumtable<-sumtable[,c(7,1,2,3,4,5,6)]
+
+sumtable<-arrange(sumtable, desc(Probs))
+
+
 
 image(movbas, rotate=F)
 
 options(scipen = 999)
 
 coef<-coef(movbas)
+coef1<-as.data.frame(cbind(coef$namesx,coef$postmean,coef$postsd,coef$probne0))
+conf<-confint(coef)
+conf2.5<-conf[1:nrow(conf)]
+conf97.5<-conf[(nrow(conf)+1):(nrow(conf)*2)]
+coef1[,5]<-conf2.5
+coef1[,6]<-conf97.5
+names(coef1)<-c("Stat", "post mean", "post SD", "postprobincl", "2.5", "97.5")
+coef1$`post mean`<-as.numeric(as.character(coef1$`post mean`))
+coef1$`post SD`<-as.numeric(as.character(coef1$`post SD`))
+coef1$postprobincl<-as.numeric(as.character(coef1$postprobincl))
+coef1<-arrange(coef1, desc(postprobincl))
+coef1
 
-confint(coef)
 
-plot(coef, subset=c(9,11))
+
+
+plot(coef, subset=c(9))
+plot(coef, subset=c(11))
+
 
 plot(movbas, which=1)
 plot(movbas, which=2)
 plot(movbas, which=3)
 plot(movbas, which=4)
+
+
 
