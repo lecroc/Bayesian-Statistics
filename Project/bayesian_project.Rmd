@@ -443,13 +443,24 @@ dev.off()
 
 ```
 
+Blah blah blah
+
+
+####Residuals vs. Fitted
+
+```{r fig.align='center', fig.width=11, fig.height=5}
+
+plot(movbas, which=1)
+
+```
+
+Model tends to underestimate audience_score at lower scores.
+
 * * *
 
 ## Part 5: Prediction
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
-button above. Make sure that your code is visible in the project you submit. 
-Delete this note when before you submit your work.
+Now I'll predict the audience score from two movies not included in the data set.  Data points for "The Revenant" and "La La Land" were pulled from the following web sites.
 
 https://www.boxofficemojo.com
 
@@ -457,13 +468,33 @@ https://www.rottentomatoes.com
 
 https://www.imdb.com
 
+I'll read in the new data and use the Predict() function to predict the audience_score for the two new films.
 
+```{r fig.align='center', fig.width=11, fig.height=5}
 
+predmovdat<-read.csv("predmovdat.csv")
 
+preds <- predict(movbas, predmovdat, estimator = "BMA", se.fit=TRUE)
+ci_audience <- confint(preds, parm="pred")
 
+preds1<-as.data.frame(ci_audience[,1:3])
+actual<-predmovdat[,1]
+preds1$actual<-actual
+preds1<-round(preds1, digits = 0)
+preds1$Movie<-c("The Revenant", "La La Land")
+preds1<-preds1[,c(5,4,3,1,2)]
+names(preds1)<-c("Movie", "Actual", "Predicted", "Lower CI", "Upper CI")
+
+kable(preds1)
+
+```
+
+Blah blah blah
 
 
 * * *
 
 ## Part 6: Conclusion
+
+Blah blah blah
 

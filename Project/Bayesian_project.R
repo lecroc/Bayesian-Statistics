@@ -348,7 +348,7 @@ plot(coef, subset=c(11))
 
 dev.off()
     
-     
+   
 
 plot(movbas, which=1)
 plot(movbas, which=2)
@@ -365,5 +365,13 @@ predmovdat<-read.csv("predmovdat.csv")
 preds <- predict(movbas, predmovdat, estimator = "BMA", se.fit=TRUE)
 ci_audience <- confint(preds, parm="pred")
 
+preds1<-as.data.frame(ci_audience[,1:3])
+actual<-predmovdat[,1]
+preds1$actual<-actual
+preds1<-round(preds1, digits = 0)
+preds1$Movie<-c("The Revenant", "La La Land")
+preds1<-preds1[,c(5,4,3,1,2)]
+names(preds1)<-c("Movie", "Actual", "Predicted", "Lower CI", "Upper CI")
+preds1
 
 
