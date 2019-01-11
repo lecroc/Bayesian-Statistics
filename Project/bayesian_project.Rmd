@@ -427,6 +427,22 @@ kable(coef1)
 
 ```
 
+Blah blah blah
+
+
+Colinear variables
+
+```{r fig.align='center', fig.width=11, fig.height=5}
+
+par(mfrow=c(1,2))
+
+plot(coef, subset=c(9))
+plot(coef, subset=c(11))
+
+dev.off()
+
+```
+
 * * *
 
 ## Part 5: Prediction
@@ -434,6 +450,18 @@ kable(coef1)
 NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
 button above. Make sure that your code is visible in the project you submit. 
 Delete this note when before you submit your work.
+
+https://www.boxofficemojo.com
+
+https://www.rottentomatoes.com
+
+https://www.imdb.com
+
+
+
+
+
+
 
 * * *
 

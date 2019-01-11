@@ -1,0 +1,3 @@
+audience_score,feature_film,drama,runtime,mpaa_rating_R,thtr_rel_year,oscar_season,summer_season,imdb_rating,imdb_num_votes,critics_score,best_pic_nom,best_pic_win,best_actor_win,best_actress_win,best_dir_win,top200_box
+84,yes,yes,156,yes,2015,yes,no,8,594659,78,yes,no,yes,no,yes,yes
+81,yes,yes,128,no,2016,yes,no,8,413959,91,yes,no,no,yes,yes,yes

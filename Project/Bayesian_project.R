@@ -12,6 +12,7 @@ library(GGally)
 library(statsr)
 library(BAS)
 library(knitr)
+library(gridExtra)
 
 # load data
 
@@ -340,16 +341,29 @@ coef1<-arrange(coef1, desc(postprobincl))
 coef1
 
 
-
+par(mfrow=c(1,2))
 
 plot(coef, subset=c(9))
 plot(coef, subset=c(11))
 
+dev.off()
+    
+     
 
 plot(movbas, which=1)
 plot(movbas, which=2)
 plot(movbas, which=3)
 plot(movbas, which=4)
+
+write.csv(movdat, file = "movdat.csv")
+
+
+### Prediction
+
+predmovdat<-read.csv("predmovdat.csv")
+
+preds <- predict(movbas, predmovdat, estimator = "BMA", se.fit=TRUE)
+ci_audience <- confint(preds, parm="pred")
 
 
 
